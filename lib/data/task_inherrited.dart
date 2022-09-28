@@ -15,8 +15,8 @@ class TaskInherrited extends InheritedWidget {
     Task('Meditar', 'assets/images/meditar.jpg', 5),
   ];
 
-  void newTask(String nome, String foto, int dificuldade){
-    taskList.add(Task(nome, foto, dificuldade));
+  void newTask(String nome, String foto, int difficulty){
+    taskList.add(Task(nome, foto, difficulty));
   }
 
   static TaskInherrited of(BuildContext context) {

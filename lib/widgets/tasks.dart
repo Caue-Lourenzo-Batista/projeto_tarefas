@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_tarefas/data/task_dao.dart';
 
 import 'difficulty.dart';
 
 class Task extends StatefulWidget {
   final String tarefa;
   final String foto;
-  final int dificuldade;
+  final int difficulty;
   int nivel = 0;
   int state = 0;
 
-  Task(this.tarefa, this.foto, this.dificuldade, {Key? key})
+  Task(this.tarefa, this.foto, this.difficulty, {Key? key})
       : super(key: key);
 
   @override
@@ -44,7 +45,7 @@ class _TaskState extends State<Task> {
               borderRadius: BorderRadius.circular(10),
               color: colors[widget.state],
             ),
-            height: 120,
+            height: 130,
           ),
           Column(
             children: [
@@ -53,7 +54,7 @@ class _TaskState extends State<Task> {
                   borderRadius: BorderRadius.circular(10),
                   color: Colors.white,
                 ),
-                height: 90,
+                height: 100,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -86,13 +87,13 @@ class _TaskState extends State<Task> {
                           child: Text(
                             widget.tarefa,
                             style: const TextStyle(
-                              fontSize: 15,
+                              fontSize: 16,
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
                         ),
                         Difficulty(
-                          levelDificulty: widget.dificuldade,
+                          levelDificulty: widget.difficulty,
                         ),
                       ],
                     ),
@@ -100,28 +101,49 @@ class _TaskState extends State<Task> {
                       padding: const EdgeInsets.only(
                         right: 10.0,
                       ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          setState(() {
-                            if (widget.nivel < widget.dificuldade * 10) {
-                              widget.nivel++;
-                            } else if (widget.state == colors.length - 1) {
-                              widget.nivel++;
-                            } else {
-                              widget.nivel = 0;
-                              widget.state++;
-                            }
-                          });
-                        },
-                        child: SizedBox(
-                            height: 50,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: const [
-                                Icon(Icons.arrow_circle_up_rounded),
-                                Text("Level Up")
-                              ],
-                            )),
+                      child: Column(
+                        children: [
+                          ElevatedButton(
+
+                            onPressed: () {
+                              setState(() {
+                                TaskDao().delete(widget.tarefa);
+                              });
+                            },
+                            child: SizedBox(
+                                height: 25,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.delete_forever),
+                                  ],
+                                )),
+                          ),
+
+                          ElevatedButton(
+
+                            onPressed: () {
+                              setState(() {
+                                if (widget.nivel < widget.difficulty * 10) {
+                                  widget.nivel++;
+                                } else if (widget.state == colors.length - 1) {
+                                  widget.nivel++;
+                                } else {
+                                  widget.nivel = 0;
+                                  widget.state++;
+                                }
+                              });
+                            },
+                            child: SizedBox(
+                                height: 25,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: const [
+                                    Icon(Icons.arrow_circle_up_rounded),
+                                  ],
+                                )),
+                          ),
+                        ],
                       ),
                     ),
                   ],
@@ -136,8 +158,8 @@ class _TaskState extends State<Task> {
                       width: 200,
                       child: LinearProgressIndicator(
                         color: Colors.white,
-                        value: (widget.dificuldade > 0)
-                            ? (widget.nivel / widget.dificuldade) / 10
+                        value: (widget.difficulty > 0)
+                            ? (widget.nivel / widget.difficulty) / 10
                             : 1,
                       ),
                     ),

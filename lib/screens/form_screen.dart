@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projeto_tarefas/Widgets/tasks.dart';
+import 'package:projeto_tarefas/data/task_dao.dart';
 import 'package:projeto_tarefas/data/task_inherrited.dart';
 
 class form_screen extends StatefulWidget {
@@ -16,8 +18,8 @@ class _form_screenState extends State<form_screen> {
   TextEditingController imageController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  bool valueValidator(String? value){
-    if(value != null && value.isEmpty){
+  bool valueValidator(String? value) {
+    if (value != null && value.isEmpty) {
       return true;
     } else {
       return false;
@@ -141,13 +143,22 @@ class _form_screenState extends State<form_screen> {
                       child: ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
+
                             // print(nameController);
                             // print(difficultyController);
                             // print(imageController);
-                            TaskInherrited.of(widget.taskContext).newTask(
+
+                            // TaskInherrited.of(widget.taskContext).newTask(
+                            //     nameController.text,
+                            //     imageController.text,
+                            //     int.parse(difficultyController.text));
+
+                            TaskDao().save(Task(
                                 nameController.text,
                                 imageController.text,
-                                int.parse(difficultyController.text));
+                                int.parse(difficultyController.text)
+                              )
+                            );
 
                             ScaffoldMessenger.of(context).showSnackBar(
                               const SnackBar(
@@ -169,5 +180,4 @@ class _form_screenState extends State<form_screen> {
       ),
     );
   }
-
 }

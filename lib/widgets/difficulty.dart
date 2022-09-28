@@ -15,27 +15,27 @@ class Difficulty extends StatelessWidget {
       children: [
         Icon(
           Icons.star,
-          size: 15,
+          size: 18,
           color: (levelDificulty >= 1) ? Colors.blue : Colors.blue[100],
         ),
         Icon(
           Icons.star,
-          size: 15,
+          size: 18,
           color: (levelDificulty >= 2) ? Colors.blue : Colors.blue[100],
         ),
         Icon(
           Icons.star,
-          size: 15,
+          size: 18,
           color: (levelDificulty >= 3) ? Colors.blue : Colors.blue[100],
         ),
         Icon(
           Icons.star,
-          size: 15,
+          size: 18,
           color: (levelDificulty >= 4) ? Colors.blue : Colors.blue[100],
         ),
         Icon(
           Icons.star,
-          size: 15,
+          size: 18,
           color: (levelDificulty >= 5) ? Colors.blue : Colors.blue[100],
         ),
       ],
