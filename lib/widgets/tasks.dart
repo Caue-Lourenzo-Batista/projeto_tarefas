@@ -10,8 +10,7 @@ class Task extends StatefulWidget {
   int nivel = 0;
   int state = 0;
 
-  Task(this.tarefa, this.foto, this.difficulty, {Key? key})
-      : super(key: key);
+  Task(this.tarefa, this.foto, this.difficulty, {Key? key}) : super(key: key);
 
   @override
   State<Task> createState() => _TaskState();
@@ -104,12 +103,29 @@ class _TaskState extends State<Task> {
                       child: Column(
                         children: [
                           ElevatedButton(
+                            onPressed: () => showDialog<String>(
+                              context: context,
+                              builder: (BuildContext context) => AlertDialog(
+                                title: const Text('Excluir tarefa'),
+                                content: const Text('Tem certeza que deseja excluir essa tarefa?'),
+                                actions: <Widget>[
 
-                            onPressed: () {
-                              setState(() {
-                                TaskDao().delete(widget.tarefa);
-                              });
-                            },
+                                  TextButton(
+                                    onPressed: () =>
+                                        Navigator.pop(context, 'Cancel'),
+                                    child: const Text('Cancel'),
+                                  ),
+
+                                  TextButton(
+                                    onPressed: () {
+                                      Navigator.pop(context, 'Excluir');
+                                      TaskDao().delete(widget.tarefa);
+                                    },
+                                      child: const Text('Excluir'),
+                                  )
+                                ],
+                              ),
+                            ),
                             child: SizedBox(
                                 height: 25,
                                 child: Column(
@@ -119,9 +135,7 @@ class _TaskState extends State<Task> {
                                   ],
                                 )),
                           ),
-
                           ElevatedButton(
-
                             onPressed: () {
                               setState(() {
                                 if (widget.nivel < widget.difficulty * 10) {
